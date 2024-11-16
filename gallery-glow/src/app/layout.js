@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "GalleryGlow",
-  description: "A image gallery App built with Next.js",
+  title: "PhotoFeed",
+  description: "A Photo Feed App built with Next.js",
 };
 
 export default function RootLayout({ children }) {
