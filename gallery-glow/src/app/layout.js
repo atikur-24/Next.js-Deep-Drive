@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "PhotoFeed",
+  title: "Gallery Glow",
   description: "A Photo Feed App built with Next.js",
 };
 
