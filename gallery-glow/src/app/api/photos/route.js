@@ -4,5 +4,11 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const data = await getAllPhotos();
 
-  return NextResponse.json(data);
+  const filteredData = data?.map(({ id, title, url }) => ({
+    id,
+    title,
+    url,
+  }));
+
+  return NextResponse.json(filteredData);
 }

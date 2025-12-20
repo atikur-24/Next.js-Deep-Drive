@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Gallery Glow",
-  description: "A Photo Feed App built with Next.js",
+  description: "A luminous showcase of art and creativity.",
 };
 
 export default function RootLayout({ children }) {
