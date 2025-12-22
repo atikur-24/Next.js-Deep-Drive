@@ -20,7 +20,7 @@ const Modal = ({ children }) => {
   }
 
   return createPortal(
-    <dialog ref={modalRef} className="shadow-teal-700 shadow-md border border-teal-600 flex flex-col p-2 rounded-md">
+    <dialog ref={modalRef} className="flex flex-col p-2 rounded-md">
       <span onClick={onHide} className="flex justify-end cursor-pointer">
         <Image src="/xmark.svg" alt="close" width={30} height={30} />
       </span>
