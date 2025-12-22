@@ -7,8 +7,6 @@ let defaultLocale = "en";
 
 function getLocale(request) {
   const acceptedLanguage = request.headers.get("accept-language") ?? undefined;
-  console.log(acceptedLanguage);
-
   const headers = { "accept-language": acceptedLanguage };
   const languages = new Negotiator({ headers }).language();
 
