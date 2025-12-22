@@ -29,7 +29,7 @@ const LanguageSwitcher = () => {
     if (pathname.includes(selectedLanguage.code)) {
       path = pathname.replace(selectedLanguage.code, lang);
     } */
-    setSelectedLanguage({ ...selectedLanguage, code: lang, language: lang === "en" ? "English" : "Bangla" });
+    setSelectedLanguage({ ...selectedLanguage, code: lang, language: lang === "en" ? "English" : "Bangla", flag: lang === "en" ? "/usa.png" : "/bd.png" });
     setShowManu(false);
     router.push(`/${lang}`);
   };
@@ -38,7 +38,7 @@ const LanguageSwitcher = () => {
     <div className="flex gap-4 items-center">
       <div className="relative">
         <button className="flex items-center gap-2" onClick={() => setShowManu(!showManu)}>
-          <Image className="max-w-8" src="/bd.png" alt="bangla" height={100} width={165} />
+          <Image className="max-w-8" src={selectedLanguage.flag} alt="bangla" height={100} width={165} />
           {selectedLanguage.language}
         </button>
         {showManu && (
