@@ -1,4 +1,4 @@
-import { getLocations } from "@/app/lib/location-util";
+import { getLocations } from "@/lib/location-util";
 
 export async function GET() {
   const locationData = getLocations();

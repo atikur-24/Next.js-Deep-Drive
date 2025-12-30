@@ -1,7 +1,7 @@
 const HomePage = () => {
   return (
     <div>
-      <h1>This is HomePage component</h1>
+      <h1>This is location home page</h1>
     </div>
   );
 };
