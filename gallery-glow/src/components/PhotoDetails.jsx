@@ -1,4 +1,4 @@
-import { getDictionary } from "@/app/[lang]/dictionaries";
+import { getDictionary } from "@/lib/dictionaries";
 import Image from "next/image";
 
 const PhotoDetails = async ({ id, lang }) => {
