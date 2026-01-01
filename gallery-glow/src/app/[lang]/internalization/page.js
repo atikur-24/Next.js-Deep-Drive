@@ -1,4 +1,4 @@
-export default function AboutPage() {
+export default function InternalizationPage() {
   return (
     <section className="mx-auto max-w-5xl px-4 py-16">
       {/* Header */}
