@@ -1,8 +1,10 @@
 "use server";
 
-import { createUser, findUserByCredentials } from "@/db/queries";
+import { createUser, findUserByCredentials, updateInterest } from "@/db/queries";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+// Registers a new user
 async function registerUser(formData) {
   let createdUser;
 
@@ -10,8 +12,8 @@ async function registerUser(formData) {
     const user = Object.fromEntries(formData);
     createdUser = await createUser(user);
   } catch (error) {
-    console.error(error);
-    return;
+    console.log(error);
+    throw error;
   }
 
   if (createdUser) {
@@ -19,6 +21,7 @@ async function registerUser(formData) {
   }
 }
 
+// Logs in a user
 async function loginUser(formData) {
   try {
     const credential = {};
@@ -28,7 +31,20 @@ async function loginUser(formData) {
     return foundUser;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 
-export { loginUser, registerUser };
+// Updates the interest of a user for a specific event
+async function updateInterestEvent(eventId, userId) {
+  try {
+    await updateInterest(eventId, userId);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+
+  revalidatePath("/");
+}
+
+export { loginUser, registerUser, updateInterestEvent };

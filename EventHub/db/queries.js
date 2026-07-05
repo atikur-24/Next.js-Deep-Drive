@@ -1,6 +1,7 @@
 import { eventModel } from "@/models/event-model";
 import { userModel } from "@/models/user-model";
 import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/utils/data.util";
+import mongoose from "mongoose";
 
 // Get all events from the database
 async function getAllEvents() {
@@ -46,4 +47,25 @@ async function findUserByCredentials(credential) {
   }
 }
 
-export { createUser, findUserByCredentials, getAllEvents, getEventById };
+// Update the interest of a user for a specific event in the database
+async function updateInterest(eventId, userId) {
+  try {
+    const event = await eventModel.findById(eventId);
+
+    if (event) {
+      const foundInterestedUser = event.interested_ids.find((id) => id.toString() === userId);
+
+      if (foundInterestedUser) {
+        event.interested_ids.pull(new mongoose.Types.ObjectId(userId));
+      } else {
+        event.interested_ids.push(new mongoose.Types.ObjectId(userId));
+      }
+
+      event.save();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { createUser, findUserByCredentials, getAllEvents, getEventById, updateInterest };
