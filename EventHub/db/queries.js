@@ -68,4 +68,15 @@ async function updateInterest(eventId, userId) {
   }
 }
 
-export { createUser, findUserByCredentials, getAllEvents, getEventById, updateInterest };
+// Update the going status of a user for a specific event in the database
+async function updateGoing(eventId, userId) {
+  try {
+    const event = await eventModel.findById(eventId);
+    event.going_ids.push(new mongoose.Types.ObjectId(userId));
+    event.save();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { createUser, findUserByCredentials, getAllEvents, getEventById, updateGoing, updateInterest };
