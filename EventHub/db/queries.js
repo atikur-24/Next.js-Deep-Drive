@@ -3,11 +3,17 @@ import { userModel } from "@/models/user-model";
 import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/utils/data.util";
 import mongoose from "mongoose";
 
-// Get all events from the database
-async function getAllEvents() {
+// Get all events from the database, optionally filtered by a query
+async function getAllEvents(query) {
   try {
-    const events = await eventModel.find().lean();
-    return replaceMongoIdInArray(events);
+    let allEvents = [];
+    if (query) {
+      const regex = new RegExp(query, "i");
+      allEvents = await eventModel.find({ name: { $regex: regex } }).lean();
+    } else {
+      allEvents = await eventModel.find().lean();
+    }
+    return replaceMongoIdInArray(allEvents);
   } catch (error) {
     console.log(error);
   }
