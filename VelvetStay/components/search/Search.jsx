@@ -1,4 +1,4 @@
-const Search = ({fromList}) => {
+const Search = ({ fromList }) => {
   return (
     <>
       <div className="lg:max-h-[250px] mt-6">
@@ -8,7 +8,7 @@ const Search = ({fromList}) => {
             <h4 className="mt-2">
               <select name="destination" id="destination">
                 <option value="Bali">Bali</option>
-                <option value="Bali">Cox's Bazar</option>
+                <option value="Bali">Cox&apos;s Bazar</option>
                 <option value="Bali">Sylhet</option>
                 <option value="Bali">Saint Martin</option>
                 <option value="Bali">Bali</option>
@@ -32,7 +32,7 @@ const Search = ({fromList}) => {
         </div>
       </div>
 
-      <button className="search-btn">🔍️ {fromList ? "Modify Search": "Search"}</button>
+      <button className="search-btn">🔍️ {fromList ? "Modify Search" : "Search"}</button>
     </>
   );
 };
