@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { dbConnect } from "@/services/mongo";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -10,7 +11,9 @@ export const metadata = {
     "Velvet Stay is a luxurious and comfortable stay experience that offers a wide range of amenities and services to ensure that guests have a memorable and enjoyable stay. Our properties are designed to provide the perfect blend of comfort, style, and convenience, making them ideal for both business and leisure travelers.",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  await dbConnect();
+
   return (
     <html lang="en">
       <body className={inter.className}>
