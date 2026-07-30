@@ -18,15 +18,15 @@ const PhotoDetails = async ({ id, lang }) => {
         <div className="text-xs lg:text-sm text-black/60 mb-6">{photo.tags.map((tag) => `#${tag} `)}</div>
         <div className="space-y-2.5 text-black/80 text-xs lg:text-sm">
           <div className="flex justify-between">
-            <span>{dictionary.views}</span>
+            <span>{dictionary.common.views}</span>
             <span className="font-bold">{photo.views}</span>
           </div>
           <div className="flex justify-between">
-            <span>{dictionary.share}</span>
+            <span>{dictionary.common.share}</span>
             <span className="font-bold">{photo.share}</span>
           </div>
           <div className="flex justify-between">
-            <span>{dictionary.uploadedOn}</span>
+            <span>{dictionary.common.uploadedOn}</span>
             <span className="font-bold">{photo.uploaded}</span>
           </div>
         </div>
@@ -38,13 +38,13 @@ const PhotoDetails = async ({ id, lang }) => {
               <div className="spacy-y-3">
                 <h6 className="lg:text-lg font-bold">{photo.author.name}</h6>
                 <p className="text-black/60 text-xs lg:text-sm">
-                  {photo.author.followers} {dictionary.followers}
+                  {photo.author.followers} {dictionary.common.followers}
                 </p>
               </div>
             </div>
             <button className="flex items-center gap-1.5 text-black/60 text-xs xl:text-sm">
               <img src="/follow.svg" className="w-5 h-5" />
-              {dictionary.follow}
+              {dictionary.common.follow}
             </button>
           </div>
           <p className="text-xs lg:text-sm text-black/60">{photo.author.bio}</p>
@@ -57,11 +57,11 @@ const PhotoDetails = async ({ id, lang }) => {
             </button>
             <button className="flex-1 border py-1.5 rounded text-xs lg:text-sm flex items-center justify-center text-center gap-1.5 font-bold hover:bg-yellow-400">
               <Image src="/save.svg" className="w-5 h-5" width={50} height={50} />
-              {dictionary.save}
+              {dictionary.common.save}
             </button>
             <button className="flex-1 border py-1.5 rounded text-xs lg:text-sm flex items-center justify-center text-center gap-1.5 font-bold hover:bg-yellow-400">
               <Image src="/share.svg" className="w-5 h-5" width={50} height={50} />
-              {dictionary.share}
+              {dictionary.common.share}
             </button>
           </div>
         </div>
