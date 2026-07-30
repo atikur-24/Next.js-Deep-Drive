@@ -1,3 +1,4 @@
+import { amenityModel } from "@/models/amenity-model";
 import { bookingModel } from "@/models/booking-model";
 import { hotelModel } from "@/models/hotel-model";
 import { ratingModel } from "@/models/rating-model";
@@ -21,17 +22,56 @@ async function findBooking(hotelId, checkin, checkout) {
 }
 
 // Get all hotels data
-export async function getAllHotels(destination, checkin, checkout) {
+export async function getAllHotels(destination, checkin, checkout, category, amenity, sortByPrice) {
   try {
     const regex = new RegExp(destination, "i");
 
     const hotelsByDestination = await hotelModel
       .find({ city: { $regex: regex } })
-      .select(["thumbNailUrl", "name", "highRate", "lowRate", "city", "propertyCategory"])
+      .select(["thumbNailUrl", "name", "highRate", "lowRate", "city", "propertyCategory", "amenities"])
       .lean();
 
     let allHotels = hotelsByDestination;
 
+    // filter for sort by price
+    if (sortByPrice === "high-to-low") {
+      allHotels.sort((a, b) => {
+        const avgA = (a.highRate + a.lowRate) / 2;
+        const avgB = (b.highRate + b.lowRate) / 2;
+
+        return avgB - avgA;
+      });
+    }
+
+    if (sortByPrice === "low-to-high") {
+      allHotels.sort((a, b) => {
+        const avgA = (a.highRate + a.lowRate) / 2;
+        const avgB = (b.highRate + b.lowRate) / 2;
+
+        return avgA - avgB;
+      });
+    }
+
+    if (category) {
+      // filter for category
+      const categoriesToMatch = category.split("|");
+
+      allHotels = allHotels.filter((hotel) => {
+        return categoriesToMatch.includes(hotel.propertyCategory.toString());
+      });
+    }
+
+    // filter for amenities
+    if (amenity) {
+      const amenitiesToMatch = amenity.split("|");
+
+      allHotels = allHotels.filter((hotel) => {
+        const hotelAmenityIds = hotel.amenities?.map((a) => a?.toString());
+        return amenitiesToMatch.some((id) => hotelAmenityIds?.includes(id));
+      });
+    }
+
+    // filter for chekin & checkout
     if (checkin && checkout) {
       allHotels = await Promise.all(
         allHotels.map(async (hotel) => {
@@ -45,7 +85,6 @@ export async function getAllHotels(destination, checkin, checkout) {
         }),
       ).catch((err) => console.log(err));
     }
-
     return replaceMongoIdInArray(allHotels);
   } catch (error) {
     console.log(error);
@@ -106,6 +145,16 @@ export async function getBookingsByUser(userId) {
   try {
     const bookings = await bookingModel.find({ userId: userId }).lean();
     return replaceMongoIdInArray(bookings);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// get user by email
+export async function getAllAmenities() {
+  try {
+    const amenities = await amenityModel.find().select(["_id", "name"]).lean();
+    return replaceMongoIdInArray(amenities);
   } catch (error) {
     console.log(error);
   }

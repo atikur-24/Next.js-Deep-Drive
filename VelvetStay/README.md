@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 🧠 Topics Covered (So Far)
 
-## Getting Started
+### 1️⃣ Component Structure & Group Layout
 
-First, run the development server:
+### 2️⃣ Database Design
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 3️⃣ Set Up MongoDB, Collections & Data Records
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4️⃣ Create Schema and Model for Each Collection
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 5️⃣ Authentication with NextAuth
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Use case: Set up NextAuth with OAuth2 — implement Google & Facebook login
+- Use case: Store the OAuth2 session in MongoDB on successful login — showcase Adapter
+- Use case: Implement credential-based login — Email & Password
 
-## Learn More
+### 6️⃣ Implement API Routing
 
-To learn more about Next.js, take a look at the following resources:
+- Use case: Implement user registration via a server-side API route, storing data in the DB
+- Use case: Implement hotel booking via a server-side API route, storing data in the DB
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 7️⃣ Implement Protected Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 8️⃣ Complete Hotel Listing & Details from DB — Query and Data Replacement
 
-## Deploy on Vercel
+### 9️⃣ Implement Complex Searching and Filtering System
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🔟 Implement Hotel Booking Functionality
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 1️⃣1️⃣ Implement My Profile Booking List
