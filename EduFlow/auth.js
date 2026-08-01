@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
-import { authConfig } from "./auth.config";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { User } from "./model/user-model";
 import bcrypt from "bcryptjs";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { authConfig } from "./auth.config";
+import { User } from "./model/user-model";
 
 export const {
   auth,
@@ -21,10 +21,7 @@ export const {
           console.log(user);
 
           if (user) {
-            const isMatch = await bcrypt.compare(
-              credentials.password,
-              user.password
-            );
+            const isMatch = await bcrypt.compare(credentials.password, user.password);
 
             if (isMatch) {
               return user;
