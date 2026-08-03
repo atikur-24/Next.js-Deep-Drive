@@ -67,6 +67,7 @@ export async function getCourseDetails(id) {
   }
 }
 
+// get course details by instructor ID with populated fields and return it with replaced MongoDB IDs
 export async function getCourseDetailsByInstructor(instructorId) {
   try {
     const courses = await Course.find({ instructor: instructorId }).lean();

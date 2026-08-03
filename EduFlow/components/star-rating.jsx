@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 
 export function StarRating({ rating }) {
@@ -7,7 +6,7 @@ export function StarRating({ rating }) {
   return (
     <>
       {stars.map((star, index) => (
-        <Image key={index} src={`/assets/star.svg`} width={20} height={20} />
+        <Image key={index} src={`/assets/star.svg`} alt="Star" width={20} height={20} />
       ))}
     </>
   );
