@@ -1,35 +1,27 @@
-"use client"
-
-import Link from "next/link";
+"use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export function SignupForm({role}) {
+export function SignupForm({ role }) {
   const router = useRouter();
 
   async function onSubmit(event) {
     event.preventDefault();
 
-    try{
+    try {
       const formData = new FormData(event.currentTarget);
 
       const firstName = formData.get("first-name");
       const lastName = formData.get("last-name");
-      const email = formData.get('email');
-      const password = formData.get('password');
+      const email = formData.get("email");
+      const password = formData.get("password");
 
-      const userRole = ((role === "student") || (role === "instructor")) ? role : "student";
+      const userRole = role === "student" || role === "instructor" ? role : "student";
 
       const response = await fetch("/api/register", {
         method: "POST",
@@ -41,13 +33,12 @@ export function SignupForm({role}) {
           lastName,
           email,
           password,
-          userRole
-        })
+          userRole,
+        }),
       });
 
       response.status === 201 && router.push("/login");
-
-    } catch(e){
+    } catch (e) {
       console.log(e.message);
     }
   }
@@ -56,9 +47,7 @@ export function SignupForm({role}) {
     <Card className="mx-auto max-w-sm">
       <CardHeader>
         <CardTitle className="text-xl">Sign Up</CardTitle>
-        <CardDescription>
-          Enter your information to create an account
-        </CardDescription>
+        <CardDescription>Enter your information to create an account</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={onSubmit}>
@@ -75,13 +64,7 @@ export function SignupForm({role}) {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
+              <Input id="email" name="email" type="email" placeholder="m@example.com" required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
