@@ -28,7 +28,7 @@ const CourseCard = ({ course }) => {
       </Link>
       <div className="flex items-center justify-between mt-4">
         <p className="text-md md:text-sm font-medium text-slate-700">{formatPrice(course?.price)}</p>
-        <EnrollCourse asLink={true} course={course} />
+        <EnrollCourse asLink={true} courseId={course?.id} />
       </div>
     </div>
   );
