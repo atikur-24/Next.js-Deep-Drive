@@ -1,4 +1,5 @@
 "use client";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -20,7 +21,13 @@ function Menu() {
         </li>
       ))}
       <li className="navbar-item account-menu">
-        <Link href="#" className="navbar-link text-slate-400 flex items-center py-2 rounded">
+        <Link
+          href="#"
+          onClick={() => {
+            signOut();
+          }}
+          className="navbar-link text-slate-400 flex items-center py-2 rounded"
+        >
           <h6 className="mb-0 font-semibold">Sign Out</h6>
         </Link>
       </li>
