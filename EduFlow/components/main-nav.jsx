@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "./logo";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -16,6 +17,7 @@ export function MainNav({ items, children }) {
 
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [loginSession, setLoginSession] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   if (session?.error === "RefreshAccessTokenError") {
     redirect("/login");
@@ -23,6 +25,17 @@ export function MainNav({ items, children }) {
 
   useEffect(() => {
     setLoginSession(session);
+    async function fetchMe() {
+      try {
+        const response = await fetch("/api/me");
+        const data = await response.json();
+        setLoggedInUser(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchMe();
   }, [session]);
 
   return (
@@ -70,7 +83,7 @@ export function MainNav({ items, children }) {
           <DropdownMenuTrigger asChild>
             <div className="cursor-pointer">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                <AvatarImage src={loggedInUser?.profilePicture} alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </div>
@@ -79,6 +92,11 @@ export function MainNav({ items, children }) {
             <DropdownMenuItem className="cursor-pointer" asChild>
               <Link href="/account">Profile</Link>
             </DropdownMenuItem>
+            {loggedInUser?.role === "instructor" && (
+              <DropdownMenuItem className="cursor-pointer" asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem className="cursor-pointer" asChild>
               <Link href="/account/enrolled-courses">My Courses</Link>
             </DropdownMenuItem>
