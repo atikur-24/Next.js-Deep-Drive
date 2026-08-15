@@ -68,7 +68,7 @@ export async function getCourseDetails(id) {
 }
 
 // get course details by instructor ID with populated fields and return it with replaced MongoDB IDs
-export async function getCourseDetailsByInstructor(instructorId) {
+export async function getCourseDetailsByInstructor(instructorId, expand) {
   try {
     const courses = await Course.find({ instructor: instructorId }).lean();
 
@@ -101,6 +101,14 @@ export async function getCourseDetailsByInstructor(instructorId) {
       totalTestimonials.reduce(function (acc, obj) {
         return acc + obj.rating;
       }, 0) / totalTestimonials.length;
+
+    if (expand) {
+      return {
+        courses: courses?.flat(),
+        enrollments: enrollments?.flat(),
+        reviews: totalTestimonials,
+      };
+    }
 
     return {
       courses: courses.length,
