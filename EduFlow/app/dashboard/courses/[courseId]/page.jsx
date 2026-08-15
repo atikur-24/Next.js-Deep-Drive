@@ -1,6 +1,5 @@
 import AlertBanner from "@/components/alert-banner";
 import { IconBadge } from "@/components/icon-badge";
-import { replaceMongoIdInArray } from "@/lib/convertData";
 import { getCategories } from "@/queries/categories";
 import { getCourseDetails } from "@/queries/courses";
 import { CircleDollarSign, LayoutDashboard, ListChecks } from "lucide-react";
@@ -12,6 +11,8 @@ import { ModulesForm } from "./_components/module-form";
 import { PriceForm } from "./_components/price-form";
 import { QuizSetForm } from "./_components/quiz-set-form";
 import { TitleForm } from "./_components/title-form";
+
+import { replaceMongoIdInArray } from "@/lib/convertData";
 
 const EditCourse = async ({ params: { courseId } }) => {
   const course = await getCourseDetails(courseId);
@@ -28,10 +29,10 @@ const EditCourse = async ({ params: { courseId } }) => {
 
   return (
     <>
-      <AlertBanner label="This course is unpublished. It will not be visible in the course." variant="warning" />
+      {!course.active && <AlertBanner label="This course is unpublished. It will not be visible in the course." variant="warning" />}
       <div className="p-6">
         <div className="flex items-center justify-end">
-          <CourseActions />
+          <CourseActions courseId={courseId} isActive={course?.active} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
           <div>
