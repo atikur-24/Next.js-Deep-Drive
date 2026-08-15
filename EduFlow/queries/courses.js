@@ -32,6 +32,7 @@ export async function getCourseList() {
     return replaceMongoIdInArray(courses);
   } catch (error) {
     console.log(error);
+    throw new Error(error);
   }
 }
 
@@ -64,6 +65,7 @@ export async function getCourseDetails(id) {
     return replaceMongoIdInObject(course);
   } catch (error) {
     console.log(error);
+    throw new Error(error);
   }
 }
 
@@ -119,5 +121,17 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
     };
   } catch (error) {
     console.log(error);
+    throw new Error(error);
+  }
+}
+
+// create a new course and return it with replaced MongoDB IDs
+export async function create(courseData) {
+  try {
+    const course = await Course.create(courseData);
+    return JSON.parse(JSON.stringify(course));
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
   }
 }
