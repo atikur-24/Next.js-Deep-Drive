@@ -10,7 +10,7 @@ import { getTestimonialsForCourse } from "./testimonials";
 // get all courses with populated fields and return them with replaced MongoDB IDs
 export async function getCourseList() {
   try {
-    const courses = await Course.find({})
+    const courses = await Course.find({ active: true })
       .select(["title", "subtitle", "thumbnail", "modules", "price", "category", "instructor"])
       .populate({
         path: "category",
@@ -32,7 +32,6 @@ export async function getCourseList() {
     return replaceMongoIdInArray(courses);
   } catch (error) {
     console.log(error);
-    throw new Error(error);
   }
 }
 
@@ -65,64 +64,58 @@ export async function getCourseDetails(id) {
     return replaceMongoIdInObject(course);
   } catch (error) {
     console.log(error);
-    throw new Error(error);
   }
 }
 
 // get course details by instructor ID with populated fields and return it with replaced MongoDB IDs
 export async function getCourseDetailsByInstructor(instructorId, expand) {
-  try {
-    const courses = await Course.find({ instructor: instructorId }).lean();
+  const publishedCourses = await Course.find({ instructor: instructorId, active: true }).lean();
 
-    const enrollments = await Promise.all(
-      courses.map(async (course) => {
-        const enrollment = await getEnrollmentsForCourse(course._id.toString());
-        return enrollment;
-      }),
-    );
+  const enrollments = await Promise.all(
+    publishedCourses.map(async (course) => {
+      const enrollment = await getEnrollmentsForCourse(course._id.toString());
+      return enrollment;
+    }),
+  );
 
-    const groupedByCourses = Object.groupBy(enrollments.flat(), ({ course }) => course);
+  const groupedByCourses = Object.groupBy(enrollments.flat(), ({ course }) => course);
 
-    const totalRevenue = courses.reduce((acc, course) => {
-      return acc + groupedByCourses[course._id].length * course.price;
-    }, 0);
+  const totalRevenue = publishedCourses.reduce((acc, course) => {
+    return acc + groupedByCourses[course._id].length * course.price;
+  }, 0);
 
-    const totalEnrollments = enrollments.reduce(function (acc, obj) {
-      return acc + obj.length;
-    }, 0);
+  const totalEnrollments = enrollments.reduce(function (acc, obj) {
+    return acc + obj.length;
+  }, 0);
 
-    const testimonials = await Promise.all(
-      courses.map(async (course) => {
-        const testimonial = await getTestimonialsForCourse(course._id.toString());
-        return testimonial;
-      }),
-    );
+  const testimonials = await Promise.all(
+    publishedCourses.map(async (course) => {
+      const testimonial = await getTestimonialsForCourse(course._id.toString());
+      return testimonial;
+    }),
+  );
 
-    const totalTestimonials = testimonials.flat();
-    const avgRating =
-      totalTestimonials.reduce(function (acc, obj) {
-        return acc + obj.rating;
-      }, 0) / totalTestimonials.length;
+  const totalTestimonials = testimonials.flat();
+  const avgRating =
+    totalTestimonials.reduce(function (acc, obj) {
+      return acc + obj.rating;
+    }, 0) / totalTestimonials.length;
 
-    if (expand) {
-      return {
-        courses: courses?.flat(),
-        enrollments: enrollments?.flat(),
-        reviews: totalTestimonials,
-      };
-    }
-
+  if (expand) {
+    const allCourses = await Course.find({ instructor: instructorId }).lean();
     return {
-      courses: courses.length,
-      enrollments: totalEnrollments,
-      reviews: totalTestimonials.length,
-      ratings: avgRating.toPrecision(2),
-      revenue: totalRevenue,
+      courses: allCourses?.flat(),
+      enrollments: enrollments?.flat(),
+      reviews: totalTestimonials,
     };
-  } catch (error) {
-    console.log(error);
-    throw new Error(error);
   }
+  return {
+    courses: publishedCourses.length,
+    enrollments: totalEnrollments,
+    reviews: totalTestimonials.length,
+    ratings: avgRating.toPrecision(2),
+    revenue: totalRevenue,
+  };
 }
 
 // create a new course and return it with replaced MongoDB IDs
