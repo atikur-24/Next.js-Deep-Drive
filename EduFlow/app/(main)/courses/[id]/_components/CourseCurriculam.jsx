@@ -3,9 +3,15 @@ import { BookCheck, Clock10 } from "lucide-react";
 import CourseModuleList from "./module/CourseModuleList";
 
 const CourseCurriculam = ({ course }) => {
-  const totalDuration = course?.modules.reduce(function (acc, obj) {
-    return acc + obj.duration;
-  }, 0);
+  const totalDuration = course?.modules
+    .map((item) => {
+      return item.lessonIds.reduce(function (acc, obj) {
+        return acc + obj.duration;
+      }, 0);
+    })
+    .reduce(function (acc, obj) {
+      return acc + obj;
+    }, 0);
 
   return (
     <>
@@ -16,13 +22,13 @@ const CourseCurriculam = ({ course }) => {
         </span>
         <span className="flex items-center gap-1.5">
           <Clock10 className="w-4 h-4" />
-          {(totalDuration / 60).toPrecision(2)} Hours
+          {(totalDuration / 3660).toPrecision(2)} Hours
         </span>
       </div>
 
       {/* contents */}
       <Accordion defaultValue={["item-1", "item-2", "item-3"]} type="multiple" collapsible className="w-full">
-        {course?.modules && course?.modules.map((module) => <CourseModuleList key={course.id} module={module} />)}
+        {course?.modules && course?.modules.map((module) => <CourseModuleList key={module._id} module={module} />)}
       </Accordion>
     </>
   );

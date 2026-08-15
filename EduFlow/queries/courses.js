@@ -1,6 +1,7 @@
 import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/lib/convertData";
 import { Category } from "@/model/category-model";
 import { Course } from "@/model/course-model";
+import { Lesson } from "@/model/lesson-model";
 import { Module } from "@/model/module-model";
 import { Testimonial } from "@/model/testimonial-model";
 import { User } from "@/model/user-model";
@@ -58,6 +59,10 @@ export async function getCourseDetails(id) {
       .populate({
         path: "modules",
         model: Module,
+        populate: {
+          path: "lessonIds",
+          model: Lesson,
+        },
       })
       .lean();
 

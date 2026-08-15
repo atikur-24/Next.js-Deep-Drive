@@ -1,10 +1,12 @@
 export const replaceMongoIdInArray = (array) => {
-  const mappedArray = array.map(({ _id, ...reset }) => {
-    return {
-      id: _id.toString(),
-      ...reset,
-    };
-  });
+  const mappedArray = array
+    .map((item) => {
+      return {
+        id: item._id.toString(),
+        ...item,
+      };
+    })
+    .map(({ _id, ...rest }) => rest);
 
   return mappedArray;
 };
@@ -12,13 +14,7 @@ export const replaceMongoIdInArray = (array) => {
 export const replaceMongoIdInObject = (obj) => {
   if (!obj) return null;
 
-  const { _id, ...rest } = obj;
-
-  const updatedObj = {
-    id: _id.toString(),
-    ...rest,
-  };
-
+  const { _id, ...updatedObj } = { ...obj, id: obj._id.toString() };
   return updatedObj;
 };
 
