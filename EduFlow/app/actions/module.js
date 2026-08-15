@@ -1,7 +1,7 @@
 "use server";
 
 import { Course } from "@/model/course-model";
-import { Module } from "@/model/module.model";
+import { Module } from "@/model/module-model";
 import { create } from "@/queries/modules";
 
 export async function createModule(data) {
@@ -31,6 +31,15 @@ export async function reOrderModules(data) {
         await Module.findByIdAndUpdate(element.id, { order: element.position });
       }),
     );
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
+export async function updateModule(moduleId, data) {
+  try {
+    await Module.findByIdAndUpdate(moduleId, data);
   } catch (error) {
     console.log(error);
     throw new Error(error);

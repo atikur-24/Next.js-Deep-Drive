@@ -1,7 +1,7 @@
 import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/lib/convertData";
 import { Category } from "@/model/category-model";
 import { Course } from "@/model/course-model";
-import { Module } from "@/model/module.model";
+import { Module } from "@/model/module-model";
 import { Testimonial } from "@/model/testimonial-model";
 import { User } from "@/model/user-model";
 import { getEnrollmentsForCourse } from "./enrollments";
@@ -81,7 +81,8 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
   const groupedByCourses = Object.groupBy(enrollments.flat(), ({ course }) => course);
 
   const totalRevenue = publishedCourses.reduce((acc, course) => {
-    return acc + groupedByCourses[course._id].length * course.price;
+    const quantity = groupedByCourses[course._id] ? groupedByCourses[course._id].length : 0;
+    return acc + quantity * course.price;
   }, 0);
 
   const totalEnrollments = enrollments.reduce(function (acc, obj) {
