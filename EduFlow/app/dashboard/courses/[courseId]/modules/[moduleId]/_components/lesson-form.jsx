@@ -94,7 +94,7 @@ export const LessonForm = ({ initialData, moduleId, courseId }) => {
         </div>
       )}
       <div className="font-medium flex items-center justify-between">
-        Module Lessons
+        Module Lesson
         <Button variant="ghost" onClick={toggleCreating}>
           {isCreating ? (
             <>Cancel</>
@@ -135,7 +135,16 @@ export const LessonForm = ({ initialData, moduleId, courseId }) => {
         </div>
       )}
       {!isCreating && <p className="text-xs text-muted-foreground mt-4">Drag & Drop to reorder the lessons</p>}
-      <LessonModal open={isEditing} setOpen={setIsEditing} courseId={courseId} lesson={lessonToEdit} />
+      <LessonModal
+        open={isEditing}
+        setOpen={setIsEditing}
+        courseId={courseId}
+        moduleId={moduleId}
+        lesson={lessonToEdit}
+        onclose={() => {
+          window.location.reload();
+        }}
+      />
     </div>
   );
 };
