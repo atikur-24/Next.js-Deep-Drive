@@ -20,8 +20,6 @@ const populateReviewData = async (reviews) => {
 };
 
 const populateEnrollmentData = async (enrollments) => {
-  //console.log(enrollments);
-
   const populatedEnrollments = await Promise.all(
     enrollments.map(async (enrollment) => {
       // Update Student Information
@@ -41,9 +39,9 @@ const populateEnrollmentData = async (enrollments) => {
       if (report) {
         // Calculate progress
         const course = await getCourseDetails(enrollment?.course?._id);
-        const totalModeules = course?.modules?.length;
-        const totalCompletedModules = report?.totalCompletedModeules?.length;
-        const progress = (totalCompletedModules / totalModeules) * 100;
+        const totalModules = course?.modules?.length;
+        const totalCompletedModules = report?.totalCompletedModules?.length;
+        const progress = (totalCompletedModules / totalModules) * 100;
         enrollment["progress"] = progress;
 
         // Calculate Quiz Marks
@@ -86,6 +84,7 @@ export async function getInstructorDashboardData(dataType) {
         return data;
     }
   } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
 }
