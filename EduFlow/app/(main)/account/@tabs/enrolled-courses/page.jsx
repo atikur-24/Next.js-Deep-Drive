@@ -1,7 +1,7 @@
-//import { CourseProgress } from "@/components/course-progress";
 import { auth } from "@/auth";
 import { getEnrollmentsForUser } from "@/queries/enrollments";
 import { getUserByEmail } from "@/queries/users";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import EnrolledCourseCard from "../../component/enrolled-coursecard";
 
@@ -21,7 +21,9 @@ async function EnrolledCourses() {
       {enrollments && enrollments.length > 0 ? (
         <>
           {enrollments.map((enrollment) => (
-            <EnrolledCourseCard key={enrollment?.id} enrollment={enrollment} />
+            <Link key={enrollment?.id} href={`/courses/${enrollment.course._id.toString()}/lesson`}>
+              <EnrolledCourseCard enrollment={enrollment} />
+            </Link>
           ))}
         </>
       ) : (
