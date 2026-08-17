@@ -3,6 +3,7 @@ import { Assessment } from "@/model/assessment-model";
 import { Module } from "@/model/module-model";
 import { Report } from "@/model/report-model";
 import mongoose from "mongoose";
+import { getCourseDetails } from "./courses";
 
 export async function getAReport(filter) {
   try {
@@ -14,7 +15,7 @@ export async function getAReport(filter) {
       .lean();
     return replaceMongoIdInObject(report);
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching report:", error);
     throw new Error(error);
   }
 }
@@ -66,7 +67,7 @@ export async function createWatchReport(data) {
 
     report.save();
   } catch (error) {
-    console.log(error);
+    console.error("Error creating watch report:", error);
     throw new Error(error);
   }
 }

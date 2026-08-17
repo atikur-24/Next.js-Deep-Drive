@@ -3,6 +3,7 @@ import { getLoggedInUser } from "@/lib/loggedin-user";
 import { Watch } from "@/model/watch-model";
 import { getCourseDetails } from "@/queries/courses";
 import { getAReport } from "@/queries/reports";
+import Link from "next/link";
 import { DownloadCertificate } from "./download-certificate";
 import { GiveReview } from "./give-review";
 import { SidebarModules } from "./sidebar-modules";
@@ -28,7 +29,6 @@ export const CourseSidebar = async ({ courseId }) => {
           const lessonId = lesson._id.toString();
           const watch = await Watch.findOne({ lesson: lessonId, module: moduleId, user: loggedinUser.id }).lean();
           if (watch?.state === "completed") {
-            console.log(`This lesson ${lesson.title} has completed`);
             lesson.state = "completed";
           }
           return lesson;
@@ -51,7 +51,7 @@ export const CourseSidebar = async ({ courseId }) => {
         <SidebarModules courseId={courseId} modules={updatedModules} />
 
         <div className="w-full px-6">
-          <DownloadCertificate courseId={courseId} />
+          <DownloadCertificate courseId={courseId} totalProgress={totalProgress} />
           <GiveReview courseId={courseId} />
         </div>
       </div>
