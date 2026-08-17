@@ -3,9 +3,9 @@ import { getLoggedInUser } from "@/lib/loggedin-user";
 import { Watch } from "@/model/watch-model";
 import { getCourseDetails } from "@/queries/courses";
 import { getAReport } from "@/queries/reports";
-import Link from "next/link";
 import { DownloadCertificate } from "./download-certificate";
 import { GiveReview } from "./give-review";
+import { Quiz } from "./quiz";
 import { SidebarModules } from "./sidebar-modules";
 
 export const CourseSidebar = async ({ courseId }) => {
@@ -38,6 +38,9 @@ export const CourseSidebar = async ({ courseId }) => {
     }),
   );
 
+  const quizSet = course?.quizSet;
+  const isQuizComplete = report?.quizAssessment ? true : false;
+
   return (
     <>
       <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
@@ -49,6 +52,8 @@ export const CourseSidebar = async ({ courseId }) => {
         </div>
 
         <SidebarModules courseId={courseId} modules={updatedModules} />
+
+        <div className="w-full px-4 lg:px-14 pt-10 border-t">{quizSet && <Quiz courseId={courseId} quizSet={quizSet} isTaken={isQuizComplete} />}</div>
 
         <div className="w-full px-6">
           <DownloadCertificate courseId={courseId} totalProgress={totalProgress} />

@@ -3,6 +3,8 @@ import { Category } from "@/model/category-model";
 import { Course } from "@/model/course-model";
 import { Lesson } from "@/model/lesson-model";
 import { Module } from "@/model/module-model";
+import { Quizset } from "@/model/quizset-model";
+import { Quiz } from "@/model/quizzes-model";
 import { Testimonial } from "@/model/testimonial-model";
 import { User } from "@/model/user-model";
 import { getEnrollmentsForCourse } from "./enrollments";
@@ -62,6 +64,14 @@ export async function getCourseDetails(id) {
         populate: {
           path: "lessonIds",
           model: Lesson,
+        },
+      })
+      .populate({
+        path: "quizSet",
+        model: Quizset,
+        populate: {
+          path: "quizIds",
+          model: Quiz,
         },
       })
       .lean();
