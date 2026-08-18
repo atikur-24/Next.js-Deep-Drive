@@ -8,11 +8,13 @@ The goal is not only to learn individual APIs and features, but to understand **
 
 ## 🎯 Purpose of This Repository
 
+- **Official Documentation in Practice** — After studying the **entire official Next.js documentation**, this repository applies the concepts, APIs, and patterns covered in the documentation through real, hands-on applications rather than isolated code snippets.
 - **Real Applications, Not Demos** — Each project is a functional application designed to solve a practical use case rather than demonstrate isolated code snippets.
 - **Multiple Concepts Per Project** — Each application combines multiple Next.js features and patterns to understand how they work together in real-world scenarios.
 - **Advanced Next.js Exploration** — Explore advanced and less commonly used features of the Next.js App Router.
 - **Real-World Architecture** — Practice scalable routing, authentication, authorization, data fetching, caching, and application architecture patterns.
 - **Focused & Maintainable Learning** — Keep each project isolated, readable, and structured so individual concepts can be studied and revisited easily.
+- **Reusable Component Patterns** — Build reusable, composable, and maintainable components that can be applied across different applications.
 - **Full-Stack Development** — Apply Next.js across the full stack, including frontend UI, server-side logic, APIs, authentication, database integration, and application security.
 - **Long-Term Knowledge Base** — Build a practical reference for revisiting advanced Next.js and modern full-stack development concepts.
 
