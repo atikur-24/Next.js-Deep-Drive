@@ -1,6 +1,6 @@
 # 🚀 Next.js Deep Drive
 
-**Next.js Deep Drive** is a structured learning repository inspired by the **official Next.js documentation** and the **React Accelerator course by LWS**, created to systematically explore, understand, and apply Next.js concepts through real, hands-on projects.
+**Next.js Deep Drive** is a structured learning repository inspired by the **official Next.js documentation** and the **Reactive Accelerator course by LWS**, created to systematically explore, understand, and apply Next.js concepts through real, hands-on projects.
 
 Each folder represents a **focused mini-application** where multiple concepts from the **official Next.js documentation** are combined and extended to build meaningful, real-world features.
 
